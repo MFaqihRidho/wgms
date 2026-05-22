@@ -137,6 +137,17 @@ describe("game engine", () => {
         expect(getMasonPartners(state, "Alex")).toEqual(["Sari", "Dika"]);
     });
 
+    it("mason partners excludes dead masons", () => {
+        const state = withPlayers([
+            ["Budi", "ALPHA_WOLF"],
+            ["Alex", "MASON"],
+            ["Sari", "MASON"],
+            ["Dika", "MASON"],
+        ]);
+        const afterKill = killPlayer(state, "Sari");
+        expect(getMasonPartners(afterKill, "Alex")).toEqual(["Dika"]);
+    });
+
     it("resolves day vote by killing top target", () => {
         const state = {
             ...withPlayers([

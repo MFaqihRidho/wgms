@@ -75,9 +75,22 @@ export function FantasyForest() {
   return <div className="fantasy-forest" aria-hidden="true" />
 }
 
+/**
+ * Single source of truth for role icons.
+ * Used by TarotCard, RoleSigil, GuideRoute, and any other place that needs a role icon.
+ */
+export function getRoleIcon(role: string): string {
+  if (role === 'ALPHA_WOLF' || role === 'WEREWOLF') return '🐺'
+  if (role === 'SEER') return '◉'
+  if (role === 'BACKUP_SEER') return '◎'
+  if (role === 'MASON') return '△'
+  if (role === 'BODYGUARD') return '🛡️'
+  if (role === 'VILLAGER') return '✦'
+  return '✧'
+}
+
 export function RoleSigil({ role }: { role: string }) {
-  const symbol = role.includes('WOLF') ? '☾' : role.includes('SEER') ? '◉' : role === 'MASON' ? '△' : role === 'VILLAGER' ? '✦' : '✧'
-  return <span className="inline-flex h-12 w-12 items-center justify-center rounded-full border border-[#d6a84f]/40 bg-black/35 text-2xl text-[#f8e7bd]">{symbol}</span>
+  return <span className="inline-flex h-12 w-12 items-center justify-center rounded-full border border-[#d6a84f]/40 bg-black/35 text-2xl text-[#f8e7bd]">{getRoleIcon(role)}</span>
 }
 
 // ============================================
@@ -156,22 +169,7 @@ export function getTarotCardVariant(role: PlayerRole, isAlive: boolean): TarotCa
  */
 export function getRoleSigilSymbol(role: PlayerRole, isAlive: boolean): string {
   if (!isAlive) return '✝'
-
-  switch (role) {
-    case 'ALPHA_WOLF':
-    case 'WEREWOLF':
-      return '☽' // Crescent moon for wolves
-    case 'SEER':
-      return '◉' // Eye for seer
-    case 'BACKUP_SEER':
-      return '◎' // Closed eye variant for backup seer
-    case 'MASON':
-      return '△' // Triangle for mason
-    case 'BODYGUARD':
-      return '🛡' // Shield for bodyguard
-    case 'VILLAGER':
-      return '✦' // Star for villager
-  }
+  return getRoleIcon(role)
 }
 
 /**

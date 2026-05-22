@@ -506,6 +506,9 @@ function RolePanel({ state, onAction }: { state: PlayerPrivateState; onAction: (
             targets={state.valid_targets}
             actionPending={actionPending}
             currentVote={me.night_action_target}
+            confirmedLabel="Your ward"
+            changeLabel="Change Ward"
+            changeIcon="🛡️"
             onAction={handleAction}
           />
         )}
@@ -567,12 +570,18 @@ function RolePanel({ state, onAction }: { state: PlayerPrivateState; onAction: (
 
 function SleepingPanel({ state }: { state: PlayerPrivateState }) {
   if (state.self.role === 'MASON') {
-    return (
-      <div className="fantasy-parchment rounded-2xl p-4">
-        <p className="text-sm text-violet-300 uppercase tracking-widest">Mason Partners</p>
-        <p className="mt-2 text-xl font-bold text-[#f8e7bd]">{state.mason_partners.join(', ') || 'None yet'}</p>
-      </div>
-    )
+    // Masons see their partners only on the first night (day_count === 1)
+    // After that they already know — just show the sleeping state
+    if (state.day_count === 1 && state.mason_partners.length > 0) {
+      return (
+        <div className="fantasy-parchment rounded-2xl p-4">
+          <p className="text-sm text-violet-300 uppercase tracking-widest">Mason Partners</p>
+          <p className="mt-2 text-xl font-bold text-[#f8e7bd]">{state.mason_partners.join(', ')}</p>
+          <p className="mt-2 text-xs text-[#78716c]">Remember your lodge. You will not see this again.</p>
+        </div>
+      )
+    }
+    // Night 2+ — Mason already knows their partners, just sleep
   }
   return (
     <div className="fantasy-parchment rounded-2xl p-5 text-center">
@@ -589,6 +598,9 @@ function TargetList({
   targets,
   actionPending,
   currentVote,
+  confirmedLabel: confirmedLabelProp,
+  changeLabel: changeLabelProp,
+  changeIcon: changeIconProp,
   onAction,
 }: {
   title: string
@@ -596,6 +608,9 @@ function TargetList({
   targets: PublicPlayer[]
   actionPending: string | null
   currentVote?: string | null
+  confirmedLabel?: string
+  changeLabel?: string
+  changeIcon?: string
   onAction: (action: 'NIGHT_TARGET' | 'SEER_INSPECT' | 'DAY_VOTE', target: string) => Promise<void>
 }) {
   const [changingVote, setChangingVote] = useState(false)
@@ -606,10 +621,10 @@ function TargetList({
     if (!currentVote) setChangingVote(false)
   }, [currentVote])
 
-  const confirmedLabel = action === 'NIGHT_TARGET' ? 'Your prey' : 'Your ballot'
-  const changeLabel = action === 'NIGHT_TARGET' ? 'Change Target' : 'Change Vote'
-  const changeIcon = action === 'NIGHT_TARGET' ? '🐺' : '🗳️'
-  const changingTitle = action === 'NIGHT_TARGET' ? 'Change your prey' : 'Change your ballot'
+  const confirmedLabel = confirmedLabelProp ?? (action === 'NIGHT_TARGET' ? 'Your prey' : 'Your ballot')
+  const changeLabel = changeLabelProp ?? (action === 'NIGHT_TARGET' ? 'Change Target' : 'Change Vote')
+  const changeIcon = changeIconProp ?? (action === 'NIGHT_TARGET' ? '🐺' : '🗳️')
+  const changingTitle = action === 'NIGHT_TARGET' ? `Change ${confirmedLabel.toLowerCase()}` : 'Change your ballot'
 
   const items: CompactItem[] = targets.map((t) => ({
     id: t.name,

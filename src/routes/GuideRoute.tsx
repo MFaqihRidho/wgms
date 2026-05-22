@@ -1,5 +1,5 @@
 import { Link } from 'react-router'
-import { FantasyFog, FantasyForest, FantasyMoon } from '../components/fantasy'
+import { FantasyFog, FantasyForest, FantasyMoon, getRoleIcon } from '../components/fantasy'
 
 type RoleCardProps = {
   icon: string
@@ -13,7 +13,7 @@ type RoleCardProps = {
 
 const ROLES: RoleCardProps[] = [
   {
-    icon: '🐺',
+    icon: getRoleIcon('ALPHA_WOLF'),
     name: 'Alpha Wolf',
     team: 'wolf',
     tagline: 'The hidden leader',
@@ -23,7 +23,7 @@ const ROLES: RoleCardProps[] = [
     tip: 'Blend in during the day. The Seer cannot expose you.',
   },
   {
-    icon: '🌑',
+    icon: getRoleIcon('WEREWOLF'),
     name: 'Werewolf',
     team: 'wolf',
     tagline: 'Creature of the night',
@@ -33,7 +33,7 @@ const ROLES: RoleCardProps[] = [
     tip: 'Coordinate with the Alpha Wolf. Agree on a target before dawn.',
   },
   {
-    icon: '◉',
+    icon: getRoleIcon('SEER'),
     name: 'Seer',
     team: 'village',
     tagline: 'The truth-seeker',
@@ -43,7 +43,7 @@ const ROLES: RoleCardProps[] = [
     tip: 'Share your findings carefully. Wolves will try to eliminate you.',
   },
   {
-    icon: '◎',
+    icon: getRoleIcon('BACKUP_SEER'),
     name: 'Backup Seer',
     team: 'village',
     tagline: 'The dormant oracle',
@@ -53,7 +53,7 @@ const ROLES: RoleCardProps[] = [
     tip: 'Stay quiet early. Your power is most valuable when the Seer is gone.',
   },
   {
-    icon: '△',
+    icon: getRoleIcon('MASON'),
     name: 'Mason',
     team: 'village',
     tagline: 'The trusted lodge',
@@ -63,7 +63,7 @@ const ROLES: RoleCardProps[] = [
     tip: 'Use your knowledge to build trust and coordinate votes.',
   },
   {
-    icon: '🛡',
+    icon: getRoleIcon('BODYGUARD'),
     name: 'Bodyguard',
     team: 'village',
     tagline: 'The silent protector',
@@ -73,7 +73,7 @@ const ROLES: RoleCardProps[] = [
     tip: 'Protect the Seer or Backup Seer — they are the wolves\' prime targets.',
   },
   {
-    icon: '✦',
+    icon: getRoleIcon('VILLAGER'),
     name: 'Villager',
     team: 'village',
     tagline: 'The common folk',

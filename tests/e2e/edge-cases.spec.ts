@@ -560,3 +560,51 @@ test("TV auto-loads room from URL parameter", async ({ browser, page }) => {
 
     await tv.close();
 });
+
+// ─── Mason gameplay ───────────────────────────────────────────────────────────
+
+test("mason sees their partners during night phase", async ({
+    browser,
+    page,
+}) => {
+    const roomCode = createRoomCode("K");
+    await openHost(page, roomCode);
+    // Need 8+ players to get Masons in the role plan
+    const players = await joinPlayers(browser, roomCode, createPlayerNames(8));
+    await startGame(page);
+    await advanceToNightDirect(page);
+
+    // Find mason players
+    const masonPlayers = [];
+    for (const player of players) {
+        await player.page
+            .getByTestId("player-role")
+            .waitFor({ state: "visible", timeout: 10_000 })
+            .catch(() => null);
+        const roleText = await player.page
+            .getByTestId("player-role")
+            .innerText()
+            .catch(() => "");
+        if (roleText.includes("Mason")) masonPlayers.push(player);
+    }
+
+    if (masonPlayers.length >= 2) {
+        for (const mason of masonPlayers) {
+            // Mason has no night action — sleeping panel should show partners
+            const sleepingPanel = mason.page
+                .locator(".fantasy-parchment")
+                .filter({ hasText: "Mason Partners" });
+            await expect(sleepingPanel).toBeVisible({ timeout: 8000 });
+
+            // Should show at least one partner name
+            const otherMasons = masonPlayers.filter(
+                (m) => m.name !== mason.name,
+            );
+            for (const partner of otherMasons) {
+                await expect(sleepingPanel).toContainText(partner.name);
+            }
+        }
+    }
+
+    await closePlayers(players);
+});

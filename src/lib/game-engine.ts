@@ -386,7 +386,10 @@ export function getSeerResult(
 export function getMasonPartners(state: GameState, playerName: string) {
     return state.players
         .filter(
-            (player) => player.role === "MASON" && player.name !== playerName,
+            (player) =>
+                player.role === "MASON" &&
+                player.name !== playerName &&
+                player.is_alive,
         )
         .map((player) => player.name);
 }
