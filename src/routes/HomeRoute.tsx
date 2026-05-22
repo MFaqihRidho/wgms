@@ -91,7 +91,13 @@ export function HomeRoute() {
         </nav>
 
         {/* Footer */}
-        <footer className="mt-16 text-center">
+        <footer className="mt-16 text-center space-y-3">
+          <Link
+            to="/guide"
+            className="inline-flex items-center gap-2 rounded-2xl border border-[#d6a84f]/25 bg-black/30 px-6 py-3 text-sm font-bold text-[#d8c7a3] hover:text-[#f8e7bd] hover:border-[#d6a84f]/50 transition"
+          >
+            📖 How to Play — Roles &amp; Rules
+          </Link>
           <p className="text-sm text-[#78716c]">
             Realtime synchronization powered by ancient magic
           </p>

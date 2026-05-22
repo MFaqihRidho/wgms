@@ -2,6 +2,7 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { BrowserRouter, Route, Routes } from 'react-router'
 import './index.css'
+import { GuideRoute } from './routes/GuideRoute'
 import { HomeRoute } from './routes/HomeRoute'
 import { HostRoute } from './routes/HostRoute'
 import { PlayRoute } from './routes/PlayRoute'
@@ -12,6 +13,7 @@ createRoot(document.getElementById('root')!).render(
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<HomeRoute />} />
+        <Route path="/guide" element={<GuideRoute />} />
         <Route path="/host" element={<HostRoute />} />
         <Route path="/play" element={<PlayRoute />} />
         <Route path="/tv" element={<TvRoute />} />
