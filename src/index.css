@@ -1,0 +1,947 @@
+@import "tailwindcss";
+
+:root {
+    color: #e5e7eb;
+    background: #05060a;
+    --fantasy-void: #050305;
+    --fantasy-night: #0d0a12;
+    --fantasy-forest: #10170f;
+    --fantasy-blood: #7f1d1d;
+    --fantasy-blood-bright: #dc2626;
+    --fantasy-moon: #dbeafe;
+    --fantasy-silver: #cbd5e1;
+    --fantasy-parchment: #d8c7a3;
+    --fantasy-aged-paper: #8a6f45;
+    --fantasy-gold: #d6a84f;
+    --fantasy-ember: #f97316;
+    --fantasy-violet: #6d28d9;
+    font-family:
+        Inter,
+        ui-sans-serif,
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    min-width: 320px;
+    min-height: 100vh;
+    margin: 0;
+    background:
+        radial-gradient(
+            circle at 18% 8%,
+            rgba(214, 168, 79, 0.14),
+            transparent 18rem
+        ),
+        radial-gradient(
+            circle at 82% 12%,
+            rgba(219, 234, 254, 0.16),
+            transparent 22rem
+        ),
+        radial-gradient(
+            circle at bottom,
+            rgba(127, 29, 29, 0.22),
+            transparent 34rem
+        ),
+        linear-gradient(180deg, var(--fantasy-night), var(--fantasy-void));
+}
+
+button,
+input,
+select {
+    font: inherit;
+}
+
+button:disabled {
+    cursor: not-allowed;
+    opacity: 0.55;
+}
+
+.fantasy-display {
+    font-family: Georgia, "Times New Roman", serif;
+    letter-spacing: -0.035em;
+}
+
+.fantasy-rune {
+    font-family:
+        ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+}
+
+.fantasy-shell {
+    position: relative;
+    isolation: isolate;
+    min-height: 100vh;
+    overflow: hidden;
+    background:
+        radial-gradient(
+            circle at 50% -10%,
+            rgba(219, 234, 254, 0.16),
+            transparent 24rem
+        ),
+        radial-gradient(
+            circle at 10% 20%,
+            rgba(127, 29, 29, 0.22),
+            transparent 24rem
+        ),
+        linear-gradient(180deg, rgba(13, 10, 18, 0.96), rgba(5, 3, 5, 0.98));
+}
+
+.fantasy-panel {
+    border: 1px solid rgba(214, 168, 79, 0.24);
+    background:
+        linear-gradient(135deg, rgba(216, 199, 163, 0.08), rgba(5, 3, 5, 0.68)),
+        rgba(13, 10, 18, 0.82);
+    box-shadow:
+        0 24px 80px rgba(0, 0, 0, 0.55),
+        inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(16px);
+}
+
+.fantasy-parchment {
+    border: 1px solid rgba(214, 168, 79, 0.36);
+    background:
+        radial-gradient(
+            circle at top left,
+            rgba(216, 199, 163, 0.24),
+            transparent 18rem
+        ),
+        linear-gradient(135deg, rgba(61, 42, 25, 0.82), rgba(15, 10, 8, 0.92));
+}
+
+.fantasy-input {
+    border: 1px solid rgba(214, 168, 79, 0.28);
+    background: rgba(5, 3, 5, 0.56);
+    color: var(--fantasy-parchment);
+    outline: none;
+}
+
+.fantasy-input:focus {
+    border-color: rgba(214, 168, 79, 0.85);
+    box-shadow: 0 0 0 3px rgba(214, 168, 79, 0.14);
+}
+
+.fantasy-button {
+    border: 1px solid rgba(214, 168, 79, 0.36);
+    background: linear-gradient(
+        135deg,
+        rgba(214, 168, 79, 0.22),
+        rgba(88, 54, 18, 0.5)
+    );
+    color: #fff7ed;
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.1),
+        0 12px 30px rgba(0, 0, 0, 0.28);
+}
+
+.fantasy-button:hover:not(:disabled) {
+    border-color: rgba(214, 168, 79, 0.8);
+    background: linear-gradient(
+        135deg,
+        rgba(214, 168, 79, 0.34),
+        rgba(127, 29, 29, 0.42)
+    );
+}
+
+.fantasy-button-blood {
+    border-color: rgba(220, 38, 38, 0.42);
+    background: linear-gradient(
+        135deg,
+        rgba(127, 29, 29, 0.86),
+        rgba(20, 8, 8, 0.88)
+    );
+    color: #fee2e2;
+}
+
+.fantasy-badge {
+    border: 1px solid rgba(214, 168, 79, 0.28);
+    background: rgba(5, 3, 5, 0.52);
+    color: var(--fantasy-parchment);
+}
+
+.fantasy-moon {
+    position: absolute;
+    width: min(28vw, 16rem);
+    aspect-ratio: 1;
+    border-radius: 9999px;
+    background: radial-gradient(
+        circle at 35% 28%,
+        rgba(255, 255, 255, 0.95),
+        rgba(219, 234, 254, 0.72) 38%,
+        rgba(148, 163, 184, 0.86)
+    );
+    box-shadow:
+        0 0 70px rgba(219, 234, 254, 0.7),
+        0 0 140px rgba(59, 130, 246, 0.22);
+}
+
+.fantasy-moon::after {
+    content: "";
+    position: absolute;
+    inset: 14%;
+    border-radius: inherit;
+    background:
+        radial-gradient(
+            circle at 65% 30%,
+            rgba(71, 85, 105, 0.26),
+            transparent 12%
+        ),
+        radial-gradient(
+            circle at 38% 68%,
+            rgba(71, 85, 105, 0.18),
+            transparent 10%
+        );
+}
+
+.fantasy-sun {
+    position: absolute;
+    width: min(30vw, 17rem);
+    aspect-ratio: 1;
+    border-radius: 9999px;
+    background: radial-gradient(
+        circle at 35% 30%,
+        rgba(255, 247, 237, 0.98),
+        rgba(251, 191, 36, 0.88) 36%,
+        rgba(220, 38, 38, 0.72) 72%
+    );
+    box-shadow:
+        0 0 80px rgba(251, 191, 36, 0.72),
+        0 0 160px rgba(220, 38, 38, 0.4),
+        0 0 240px rgba(249, 115, 22, 0.2);
+}
+
+.fantasy-sun::before {
+    content: "";
+    position: absolute;
+    inset: -18%;
+    border-radius: inherit;
+    background: conic-gradient(
+        from 10deg,
+        rgba(251, 191, 36, 0),
+        rgba(251, 191, 36, 0.34),
+        rgba(220, 38, 38, 0),
+        rgba(249, 115, 22, 0.32),
+        rgba(251, 191, 36, 0)
+    );
+    filter: blur(10px);
+    animation: sun-flare 8s ease-in-out infinite alternate;
+}
+
+.fantasy-sun::after {
+    content: "";
+    position: absolute;
+    inset: 18%;
+    border-radius: inherit;
+    background: radial-gradient(
+        circle at 55% 45%,
+        rgba(255, 247, 237, 0.28),
+        transparent 28%
+    );
+}
+
+.fantasy-fog {
+    pointer-events: none;
+    position: absolute;
+    inset: auto -20% 0;
+    height: 42%;
+    background:
+        radial-gradient(
+            ellipse at 20% 80%,
+            rgba(203, 213, 225, 0.12),
+            transparent 28%
+        ),
+        radial-gradient(
+            ellipse at 58% 70%,
+            rgba(203, 213, 225, 0.1),
+            transparent 30%
+        ),
+        radial-gradient(
+            ellipse at 85% 85%,
+            rgba(203, 213, 225, 0.09),
+            transparent 24%
+        );
+    filter: blur(10px);
+    animation: fog-drift 18s ease-in-out infinite alternate;
+}
+
+.fantasy-forest {
+    pointer-events: none;
+    position: absolute;
+    inset: auto 0 0;
+    height: 10rem;
+    background:
+        linear-gradient(
+            140deg,
+            transparent 0 8%,
+            rgba(0, 0, 0, 0.7) 8% 10%,
+            transparent 10% 18%,
+            rgba(0, 0, 0, 0.82) 18% 20%,
+            transparent 20% 30%,
+            rgba(0, 0, 0, 0.72) 30% 32%,
+            transparent 32% 100%
+        ),
+        linear-gradient(180deg, transparent, rgba(0, 0, 0, 0.92) 45%, #000 100%);
+    opacity: 0.75;
+}
+
+.fantasy-seal {
+    position: relative;
+}
+
+.fantasy-seal::before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    right: -0.8rem;
+    top: -0.8rem;
+    width: 3.4rem;
+    aspect-ratio: 1;
+    border-radius: 9999px;
+    background: radial-gradient(
+        circle,
+        rgba(220, 38, 38, 0.5),
+        rgba(127, 29, 29, 0.12) 68%,
+        transparent 70%
+    );
+    filter: blur(1px);
+}
+
+.role-card {
+    border: 1px solid rgba(214, 168, 79, 0.32);
+    background: linear-gradient(
+        145deg,
+        rgba(216, 199, 163, 0.11),
+        rgba(5, 3, 5, 0.72)
+    );
+}
+
+.role-card-wolf {
+    border-color: rgba(220, 38, 38, 0.5);
+    box-shadow: 0 0 48px rgba(127, 29, 29, 0.28);
+}
+
+.role-card-seer {
+    border-color: rgba(167, 139, 250, 0.58);
+    box-shadow: 0 0 48px rgba(109, 40, 217, 0.22);
+}
+
+.role-card-mason {
+    border-color: rgba(214, 168, 79, 0.56);
+}
+
+.role-card-villager {
+    border-color: rgba(249, 115, 22, 0.44);
+}
+
+@keyframes fog-drift {
+    from {
+        transform: translateX(-2%);
+    }
+    to {
+        transform: translateX(3%);
+    }
+}
+
+@keyframes sun-flare {
+    from {
+        transform: rotate(-4deg) scale(0.98);
+        opacity: 0.74;
+    }
+    to {
+        transform: rotate(6deg) scale(1.05);
+        opacity: 1;
+    }
+}
+
+/* ============================================
+   Dark Fantasy UI - Tarot Cards
+   ============================================ */
+
+.tarot-card {
+    border-width: 2px;
+    border-style: solid;
+    background: linear-gradient(
+        145deg,
+        rgba(216, 199, 163, 0.11),
+        rgba(5, 3, 5, 0.72)
+    );
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+    position: relative;
+    overflow: hidden;
+}
+
+.tarot-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 3rem;
+    height: 3rem;
+}
+
+/* Tarot card variants */
+.tarot-card-wolf {
+    border-color: var(--fantasy-blood-bright);
+    box-shadow:
+        0 0 48px rgba(127, 29, 29, 0.28),
+        0 8px 32px rgba(0, 0, 0, 0.4);
+}
+
+.tarot-card-wolf::before {
+    background: linear-gradient(
+        135deg,
+        transparent 50%,
+        rgba(220, 38, 38, 0.3) 50%
+    );
+    clip-path: polygon(100% 0, 0 0, 100% 100%);
+}
+
+.tarot-card-seer {
+    border-color: var(--fantasy-violet);
+    box-shadow:
+        0 0 48px rgba(109, 40, 217, 0.22),
+        0 8px 32px rgba(0, 0, 0, 0.4);
+}
+
+.tarot-card-seer::before {
+    background: linear-gradient(
+        135deg,
+        transparent 50%,
+        rgba(109, 40, 217, 0.3) 50%
+    );
+    clip-path: polygon(100% 0, 0 0, 100% 100%);
+}
+
+.tarot-card-mason {
+    border-color: var(--fantasy-gold);
+    box-shadow:
+        0 0 32px rgba(214, 168, 79, 0.18),
+        0 8px 32px rgba(0, 0, 0, 0.4);
+}
+
+.tarot-card-mason::before {
+    background: linear-gradient(
+        135deg,
+        transparent 50%,
+        rgba(214, 168, 79, 0.25) 50%
+    );
+    clip-path: polygon(100% 0, 0 0, 100% 100%);
+}
+
+.tarot-card-villager {
+    border-color: var(--fantasy-ember);
+    box-shadow:
+        0 0 32px rgba(249, 115, 22, 0.15),
+        0 8px 32px rgba(0, 0, 0, 0.4);
+}
+
+.tarot-card-villager::before {
+    background: linear-gradient(
+        135deg,
+        transparent 50%,
+        rgba(249, 115, 22, 0.25) 50%
+    );
+    clip-path: polygon(100% 0, 0 0, 100% 100%);
+}
+
+.tarot-card-backup-seer {
+    border-color: rgba(109, 40, 217, 0.6);
+    box-shadow:
+        0 0 32px rgba(109, 40, 217, 0.15),
+        0 8px 32px rgba(0, 0, 0, 0.4);
+}
+
+.tarot-card-backup-seer::before {
+    background: linear-gradient(
+        135deg,
+        transparent 50%,
+        rgba(109, 40, 217, 0.2) 50%
+    );
+    clip-path: polygon(100% 0, 0 0, 100% 100%);
+}
+
+.tarot-card-dead {
+    border-color: rgba(107, 114, 128, 0.5);
+    background: linear-gradient(
+        145deg,
+        rgba(107, 114, 128, 0.08),
+        rgba(5, 3, 5, 0.72)
+    );
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+    filter: grayscale(0.4);
+}
+
+.tarot-card-dead::before {
+    background: linear-gradient(
+        135deg,
+        transparent 50%,
+        rgba(107, 114, 128, 0.2) 50%
+    );
+    clip-path: polygon(100% 0, 0 0, 100% 100%);
+}
+
+/* ============================================
+   Dark Fantasy UI - Phase Scenes
+   ============================================ */
+
+.phase-scene {
+    position: relative;
+    min-height: 100vh;
+    overflow: hidden;
+}
+
+.phase-scene-waiting {
+    background: linear-gradient(180deg, #0d0a12 0%, #10170f 50%, #050305 100%);
+}
+
+.phase-scene-night {
+    background: linear-gradient(180deg, #050305 0%, #0d0a12 30%, #10170f 100%);
+}
+
+.phase-scene-day {
+    background: linear-gradient(180deg, #1a0505 0%, #2d0a0a 30%, #0d0a12 100%);
+}
+
+.phase-scene-voting {
+    background: linear-gradient(180deg, #0d0a12 0%, #1a0f05 50%, #050305 100%);
+}
+
+.phase-scene-game-over {
+    background: linear-gradient(180deg, #0d0a12 0%, #1a0505 50%, #050305 100%);
+}
+
+/* Phase scene enter animation — fades in the background on mount */
+.phase-scene-enter {
+    animation: phase-fade-in 0.8s ease-out forwards;
+}
+
+@keyframes phase-fade-in {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/* Phase transition overlay — full-screen flash shown on player/TV when phase changes */
+.phase-transition-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 40;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+    animation: phase-overlay-flash 1.8s ease-out forwards;
+}
+
+@keyframes phase-overlay-flash {
+    0% {
+        opacity: 0;
+    }
+    15% {
+        opacity: 1;
+    }
+    70% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+
+.phase-transition-overlay-night {
+    background: radial-gradient(
+        ellipse at center,
+        rgba(5, 3, 5, 0.92) 0%,
+        rgba(13, 10, 18, 0.85) 100%
+    );
+}
+
+.phase-transition-overlay-day {
+    background: radial-gradient(
+        ellipse at center,
+        rgba(45, 10, 10, 0.88) 0%,
+        rgba(26, 5, 5, 0.82) 100%
+    );
+}
+
+.phase-transition-overlay-voting {
+    background: radial-gradient(
+        ellipse at center,
+        rgba(13, 10, 18, 0.9) 0%,
+        rgba(26, 15, 5, 0.85) 100%
+    );
+}
+
+.phase-transition-overlay-game-over {
+    background: radial-gradient(
+        ellipse at center,
+        rgba(5, 3, 5, 0.95) 0%,
+        rgba(26, 5, 5, 0.9) 100%
+    );
+}
+
+/* ============================================
+   Dark Fantasy UI - Compact List
+   ============================================ */
+
+.compact-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.compact-item {
+    padding: 0.75rem 1rem;
+    border-radius: 9999px;
+    font-size: 0.875rem;
+    border: 1px solid rgba(214, 168, 79, 0.28);
+    background: rgba(5, 3, 5, 0.52);
+    color: var(--fantasy-parchment);
+    transition: all 0.2s ease;
+    min-height: 44px;
+    min-width: 44px;
+}
+
+.compact-item:hover {
+    border-color: rgba(214, 168, 79, 0.6);
+    background: rgba(214, 168, 79, 0.1);
+}
+
+.compact-item-dead {
+    opacity: 0.5;
+    text-decoration: line-through;
+}
+
+.compact-item-active {
+    border-color: var(--fantasy-gold);
+    box-shadow: 0 0 12px rgba(214, 168, 79, 0.3);
+}
+
+/* Grid layout for medium lists (7-12 items) */
+.compact-list-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.5rem;
+}
+
+/* Scrollable layout for large lists */
+.compact-list-scroll {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    max-height: 12rem;
+    overflow-y: auto;
+    padding-right: 0.5rem;
+}
+
+.compact-list-scroll::-webkit-scrollbar {
+    width: 0.375rem;
+}
+
+.compact-list-scroll::-webkit-scrollbar-track {
+    background: rgba(5, 3, 5, 0.4);
+    border-radius: 0.25rem;
+}
+
+.compact-list-scroll::-webkit-scrollbar-thumb {
+    background: rgba(214, 168, 79, 0.4);
+    border-radius: 0.25rem;
+}
+
+/* ============================================
+   Dark Fantasy UI - Timer Urgency
+   ============================================ */
+
+.timer-display {
+    font-family: Georgia, "Times New Roman", serif;
+    font-weight: bold;
+    font-variant-numeric: tabular-nums;
+}
+
+.timer-default {
+    color: var(--fantasy-parchment);
+}
+
+.timer-urgent {
+    color: var(--fantasy-ember);
+    animation: timer-pulse 1s ease-in-out infinite;
+}
+
+.timer-critical {
+    color: var(--fantasy-blood-bright);
+    animation: timer-pulse 0.5s ease-in-out infinite;
+}
+
+/* ============================================
+   Dark Fantasy UI - Auto-dismiss Messages
+   ============================================ */
+
+.message-container {
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+    z-index: 50;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.message-item {
+    padding: 0.75rem 1rem;
+    border-radius: 0.5rem;
+    border: 1px solid rgba(214, 168, 79, 0.28);
+    background: linear-gradient(
+        135deg,
+        rgba(216, 199, 163, 0.08),
+        rgba(5, 3, 5, 0.68)
+    );
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(8px);
+    max-width: 24rem;
+}
+
+.message-info {
+    border-color: rgba(214, 168, 79, 0.36);
+}
+
+.message-success {
+    border-color: rgba(34, 197, 94, 0.5);
+}
+
+.message-warning {
+    border-color: rgba(249, 115, 22, 0.5);
+}
+
+.message-error {
+    border-color: rgba(220, 38, 38, 0.5);
+}
+
+/* ============================================
+   Dark Fantasy UI - Animation Keyframes
+   ============================================ */
+
+@keyframes timer-pulse {
+    0%,
+    100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.7;
+    }
+}
+
+@keyframes message-slide-in {
+    from {
+        transform: translateY(-1rem);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes message-slide-out {
+    from {
+        transform: translateY(0);
+        opacity: 1;
+    }
+    to {
+        transform: translateY(-1rem);
+        opacity: 0;
+    }
+}
+
+@keyframes card-glow {
+    0%,
+    100% {
+        box-shadow:
+            0 0 20px rgba(214, 168, 79, 0.3),
+            0 8px 32px rgba(0, 0, 0, 0.4);
+    }
+    50% {
+        box-shadow:
+            0 0 40px rgba(214, 168, 79, 0.5),
+            0 8px 32px rgba(0, 0, 0, 0.4);
+    }
+}
+
+@keyframes moon-glow {
+    0%,
+    100% {
+        box-shadow:
+            0 0 70px rgba(219, 234, 254, 0.7),
+            0 0 140px rgba(59, 130, 246, 0.22);
+    }
+    50% {
+        box-shadow:
+            0 0 90px rgba(219, 234, 254, 0.85),
+            0 0 160px rgba(59, 130, 246, 0.28);
+    }
+}
+
+.message-enter {
+    animation: message-slide-in 0.3s ease-out;
+}
+
+.message-exit {
+    animation: message-slide-out 0.3s ease-in forwards;
+}
+
+.tarot-card-hover:hover {
+    animation: card-glow 2s ease-in-out infinite;
+    transform: translateY(-2px);
+    transition: transform 0.2s ease;
+}
+
+/* ============================================
+   Dark Fantasy UI - Reduced Motion
+   ============================================ */
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+
+    /* Disable decorative animations */
+    .fantasy-fog,
+    .fantasy-sun::before,
+    .fantasy-moon {
+        animation: none !important;
+    }
+
+    /* Disable timer urgency animations */
+    .timer-urgent,
+    .timer-critical {
+        animation: none !important;
+    }
+
+    /* Disable tarot card hover animations */
+    .tarot-card-hover:hover,
+    .tarot-nav-card:hover,
+    .tarot-nav-card:hover .tarot-nav-icon {
+        animation: none !important;
+        transform: none !important;
+        transition: none !important;
+    }
+
+    /* Disable message animations */
+    .message-enter,
+    .message-exit {
+        animation: none !important;
+    }
+
+    /* Disable button hover transitions */
+    .fantasy-button:hover:not(:disabled),
+    .compact-item:hover {
+        transition: none !important;
+    }
+}
+
+/* ============================================
+   Dark Fantasy UI - Landing Page
+   ============================================ */
+
+.landing-page {
+    background:
+        radial-gradient(
+            circle at 18% 8%,
+            rgba(214, 168, 79, 0.14),
+            transparent 18rem
+        ),
+        radial-gradient(
+            circle at 82% 12%,
+            rgba(219, 234, 254, 0.16),
+            transparent 22rem
+        ),
+        radial-gradient(
+            circle at bottom,
+            rgba(127, 29, 29, 0.22),
+            transparent 34rem
+        ),
+        linear-gradient(180deg, #0d0a12 0%, #10170f 50%, #050305 100%);
+}
+
+.tarot-nav-card {
+    border: 2px solid rgba(214, 168, 79, 0.24);
+    background: linear-gradient(
+        145deg,
+        rgba(216, 199, 163, 0.08),
+        rgba(5, 3, 5, 0.72)
+    );
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+}
+
+.tarot-nav-card:hover {
+    border-color: rgba(214, 168, 79, 0.5);
+    box-shadow:
+        0 0 40px rgba(214, 168, 79, 0.2),
+        0 12px 40px rgba(0, 0, 0, 0.5);
+}
+
+.tarot-nav-icon {
+    transition: all 0.3s ease;
+}
+
+.tarot-nav-card:hover .tarot-nav-icon {
+    transform: scale(1.05);
+    box-shadow: 0 0 20px rgba(214, 168, 79, 0.3);
+}
+
+/* ============================================
+   Dark Fantasy UI - Touch Target Accessibility
+   ============================================ */
+
+/**
+ * Ensures all interactive elements meet WCAG 2.1 minimum touch target size.
+ * WCAG Success Criterion 2.5.5: Target size should be at least 44x44 CSS pixels.
+ * This applies to buttons, links used as buttons, and other interactive controls.
+ * 
+ * Validates: Requirements 8.4 (Property 12)
+ */
+
+/* Ensure buttons have minimum touch target size */
+button,
+.fantasy-button,
+.fantasy-button-blood {
+    min-height: 44px;
+    min-width: 44px;
+}
+
+/* Compact items in lists still need accessible touch targets */
+.compact-item {
+    min-height: 44px;
+    min-width: 44px;
+}
+
+/* Ensure dismiss buttons in messages have adequate touch targets */
+.message-item button {
+    min-height: 44px;
+    min-width: 44px;
+    padding: 0.5rem 1rem;
+}
+
+/* Ensure copy link buttons have adequate touch targets */
+button[class*="rounded-2xl"][class*="bg-black/30"] {
+    min-height: 44px;
+}
